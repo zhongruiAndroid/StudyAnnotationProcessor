@@ -6,11 +6,15 @@ android {
 
     defaultConfig {
         applicationId "com.example.annotationprocessor"
-        minSdkVersion 16
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: "测试"]
+            }
+        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -33,6 +37,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
+    implementation project(':bindApi') // 注解
     implementation project(':annotation') // 注解
     annotationProcessor project(':compiler') // 注解处理器
+
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    implementation "com.squareup:javapoet:1.9.0"
 }
