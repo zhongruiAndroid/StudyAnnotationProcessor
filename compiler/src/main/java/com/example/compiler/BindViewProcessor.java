@@ -162,18 +162,20 @@ public class BindViewProcessor extends AbstractProcessor {
             BindBean value = item.getValue();
             MethodSpec unBind = MethodSpec.methodBuilder("unBind").addModifiers(Modifier.PUBLIC).build();
 
-            MethodSpec.Builder builder = MethodSpec.constructorBuilder().addParameter(value.getTargetType(), "act").addParameter(ClassName.get("android.view", "View"), "view");
+            MethodSpec.Builder builder = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).addParameter(value.getTargetType(), "act").addParameter(ClassName.get("android.view", "View"), "view");
+            builder.addStatement("this.act=act");
             for (BindFieldBean bean : value.getList()) {
                 builder.addStatement("this.act.$L= $T.class.cast(view.findViewById($L));",bean.getFieldName(),bean.getTypeName(),bean.getValue());
             }
 
             TypeSpec.Builder typeBuilder = TypeSpec.classBuilder(value.getSimpleName() + "_ZrBindView")
+                    .addModifiers(Modifier.PUBLIC)
                     .addSuperinterface(ClassName.get("com.example.bindapi", "Bind"))
                     .addField(value.getTargetType(), "act")
                     .addMethod(unBind)
                     .addMethod(builder.build());
             if(Helper.isSubtypeOfType(value.getTypeMirror(),"android.app.Activity")){
-                MethodSpec act = MethodSpec.constructorBuilder().addParameter(value.getTargetType(), "act").addStatement("this(act, act.getWindow().getDecorView())").build();
+                MethodSpec act = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).addParameter(value.getTargetType(), "act").addStatement("this(act, act.getWindow().getDecorView())").build();
                 typeBuilder.addMethod(act);
             }
             JavaFile javaFile = JavaFile.builder(value.getPackageName(), typeBuilder.build()).build();

@@ -9,8 +9,10 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.annotation.BindView;
+import com.example.bindapi.ZRBindView;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 
@@ -40,15 +42,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ZRBindView.bind(this);
         ButterKnife.bind(this);
 
+        btTest1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMsg("ZRBindView.bind(this)生效");
+            }
+        });
         btTest5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             }
         });
     }
-
+    private void showMsg(String msg){
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+    }
     public void test() {
         Unbinder bind = ButterKnife.bind(this);
         bind.unbind();
