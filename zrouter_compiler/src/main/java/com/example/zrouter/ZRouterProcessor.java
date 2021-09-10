@@ -74,11 +74,14 @@ public class ZRouterProcessor extends AbstractProcessor {
             if(isEmpty(path)){
                 continue;
             }
+            String group;
             if(path.startsWith("/")){
-
+                group=path.substring(1,path.indexOf("/",1));
+            }else{
+                group=path.substring(0,path.indexOf("/"));
             }
-//            RouterBean routerBean=new RouterBean(path);
-
+            RouterBean routerBean=new RouterBean(null,path,group);
+            routerBean.setElement(element);
 
         }
         return true;
