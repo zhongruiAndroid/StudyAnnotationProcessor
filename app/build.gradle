@@ -17,11 +17,29 @@ android {
         }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+//    signingConfigs {
+//        release {
+//            storeFile file('../ .jks')
+//            storePassword ' '
+//            keyAlias ' '
+//            keyPassword ' '
+//        }
+//    }
+
+    lintOptions {
+        abortOnError false
+    }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.zrouter;
 
 
+import com.example.zrouter_annotation.RouterBean;
 import com.example.zrouter_annotation.ZRouter;
 import com.google.auto.service.AutoService;
 
@@ -70,7 +71,13 @@ public class ZRouterProcessor extends AbstractProcessor {
             }
             ZRouter annotation = element.getAnnotation(ZRouter.class);
             String path = annotation.path();
+            if(isEmpty(path)){
+                continue;
+            }
+            if(path.startsWith("/")){
 
+            }
+//            RouterBean routerBean=new RouterBean(path);
 
 
         }

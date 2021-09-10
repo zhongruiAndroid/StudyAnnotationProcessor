@@ -2,6 +2,8 @@ package com.example.zrouter_api;
 
 import org.junit.Test;
 
+import java.util.Properties;
+
 import static org.junit.Assert.*;
 
 /**
@@ -13,5 +15,7 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
+        String java_home = System.getenv("NDK_HOME");
+        System.out.println(java_home);
     }
 }
