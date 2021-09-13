@@ -3,19 +3,20 @@ package com.example.zrouter_annotation;
 import javax.lang.model.element.Element;
 
 public class RouterBean {
-    private Class<?> destination;   // Destination
+    private Class  destination;   // Destination
     private String path;            // Path of route
     private String group;           // Group of route
     private Element element;
 
-    public RouterBean(Class<?> destination, String path, String group) {
+    public RouterBean(Class  destination, String path, String group) {
         this.destination = destination;
         this.path = path;
         this.group = group;
     }
 
-    public static RouterBean create(Class<?> destination, String path, String group) {
-        return new RouterBean(destination, path, group);
+    public static RouterBean create(Class destination, String path, String group ) {
+        RouterBean routerBean = new RouterBean(destination, path, group);
+        return routerBean;
     }
 
     public Class<?> getDestination() {

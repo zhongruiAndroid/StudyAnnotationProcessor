@@ -14,11 +14,12 @@ import android.widget.Toast;
 
 import com.example.annotation.BindView;
 import com.example.bindapi.ZRBindView;
+import com.example.zrouter_annotation.ZRouter;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 
 import java.lang.reflect.Modifier;
-
+@ZRouter(path = "order/activity2")
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btTest1)
     Button btTest1;

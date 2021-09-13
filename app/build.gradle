@@ -62,4 +62,10 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     implementation "com.squareup:javapoet:1.9.0"
+
+
+    implementation project(':zrouter_api') // 注解
+    implementation project(':zrouter_annotation') // 注解
+    annotationProcessor project(':zrouter_compiler') // 注解处理器
+
 }
