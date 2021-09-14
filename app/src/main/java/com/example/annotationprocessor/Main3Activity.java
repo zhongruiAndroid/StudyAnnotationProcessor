@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.zrouter_annotation.ZRouter;
 
-@ZRouter(path = "main/activity3")
+@ZRouter(path = "order/activity3")
 public class Main3Activity extends AppCompatActivity {
 
     @Override

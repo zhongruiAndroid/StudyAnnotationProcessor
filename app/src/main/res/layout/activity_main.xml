@@ -11,21 +11,21 @@
         android:id="@+id/btTest1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="button"
+        android:text="Button"
         android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btTest2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="button"
+        android:text="跳转2"
         android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btTest3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="button"
+        android:text="跳转3"
         android:textAllCaps="false" />
 
     <Button

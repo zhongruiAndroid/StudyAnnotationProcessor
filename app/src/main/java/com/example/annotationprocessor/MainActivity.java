@@ -14,12 +14,17 @@ import android.widget.Toast;
 
 import com.example.annotation.BindView;
 import com.example.bindapi.ZRBindView;
+import com.example.zrouter_annotation.RouterBean;
 import com.example.zrouter_annotation.ZRouter;
+import com.example.zrouter_api.IGroupLoad;
+import com.example.zrouter_api.IRouterLoad;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 
 import java.lang.reflect.Modifier;
-@ZRouter(path = "order/activity2")
+import java.util.Map;
+
+@ZRouter(path = "main/activity")
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btTest1)
     Button btTest1;
@@ -39,10 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
     @butterknife.BindView(R.id.btTest5)
     Button btTest5;
+    private Map<String, Class<? extends IRouterLoad>> stringClassMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
         setContentView(R.layout.activity_main);
         ZRBindView.bind(this);
         ButterKnife.bind(this);
@@ -59,7 +66,55 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this,Main2Activity.class));
             }
         });
+
+        btTest2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start("main/activity2");
+            }
+        });
+        btTest3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start("order/activity3");
+            }
+        });
     }
+    private void start(String path){
+        String group;
+        if (path.startsWith("/")) {
+            group = path.substring(1, path.indexOf("/", 1));
+        } else {
+            group = path.substring(0, path.indexOf("/"));
+        }
+        Class<? extends IRouterLoad> aClass = stringClassMap.get(group);
+        if(aClass==null){
+            return;
+        }
+        try {
+            IRouterLoad iRouterLoad = aClass.newInstance();
+            Map<String, RouterBean> stringRouterBeanMap = iRouterLoad.loadRouter();
+            RouterBean routerBean = stringRouterBeanMap.get(path);
+            Class<?> destination = routerBean.getDestination();
+            Intent intent = new Intent(getApplicationContext(),destination);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+    }
+    private void init() {
+        try {
+            Class<?> aClass = Class.forName("com.zr.android.arouter.routes.ZRouter$$$Group$$$Module");
+            IGroupLoad iGroupLoad = (IGroupLoad) aClass.newInstance();
+            stringClassMap = iGroupLoad.loadGroup();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showMsg(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
